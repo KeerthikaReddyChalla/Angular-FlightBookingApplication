@@ -4,18 +4,31 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
-  imports: [],
   templateUrl: './register.html',
-  styleUrl: './register.css',
+  styleUrls: ['./register.css']
 })
 export class RegisterComponent {
-register() {
-  this.authService.register(this.form).subscribe({
-    next: () => {
-      alert('Registered successfully');
-      this.router.navigate(['/login']);
-    }
-  });
-}
 
+  form = {
+    name: '',
+    email: '',
+    password: ''
+  };
+
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
+
+  register() {
+    this.authService.register(this.form).subscribe({
+      next: () => {
+        alert('Registered successfully');
+        this.router.navigate(['/login']);
+      },
+      error: () => {
+        alert('Registration failed');
+      }
+    });
+  }
 }
