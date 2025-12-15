@@ -1,14 +1,15 @@
-<div class="app-container">
-  <header class="header">
-    <h2>Flight Booking System</h2>
-    <nav>
-      <a routerLink="/login">Login</a> |
-      <a routerLink="/register">Register</a> |
-      <a routerLink="/flights">Search Flights</a>
-    </nav>
-  </header>
+<header class="navbar">
+  <div class="nav-container">
+    <div class="logo">
+      Flight Booking System
+    </div>
 
-  <main class="content">
-    <router-outlet></router-outlet>
-  </main>
-</div>
+    <nav class="nav-links">
+      <a routerLink="/login" routerLinkActive="active">Login</a>
+      <a routerLink="/register" routerLinkActive="active">Register</a>
+      <a routerLink="/flights" routerLinkActive="active">Search Flights</a>
+    </nav>
+  </div>
+</header>
+
+<router-outlet></router-outlet>

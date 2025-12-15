@@ -4,7 +4,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: #e4f1fe;
   font-family: Arial, sans-serif;
 }
 
@@ -60,7 +60,7 @@
 .login-btn {
   width: 100%;
   padding: 12px;
-  background-color: #667eea;
+  background-color: #1976d2;
   color: #fff;
   border: none;
   border-radius: 6px;
