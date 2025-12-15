@@ -1,14 +1,11 @@
 <div class="container">
 
-  <h2>Search Flights ✈️</h2>
-
-  <form (ngSubmit)="searchFlights()" #flightForm="ngForm">
-
+  <form (ngSubmit)="searchFlights()" class="search-form">
     <input
       type="text"
       placeholder="From"
       [(ngModel)]="form.from"
-      name="source"
+      name="from"
       required
     />
 
@@ -16,7 +13,7 @@
       type="text"
       placeholder="To"
       [(ngModel)]="form.to"
-      name="destination"
+      name="to"
       required
     />
 
@@ -32,22 +29,22 @@
 
   <hr />
 
-  <div *ngIf="flights.length === 0 && searched">
-    <p>No flights found</p>
+  <h2 *ngIf="searched">Available Flights</h2>
+
+  <div *ngIf="searched && flights.length === 0">
+    <p>No flights found.</p>
   </div>
 
-  <div *ngIf="flights.length > 0">
-    <h3>Available Flights</h3>
-
-    <div class="flight-card" *ngFor="let flight of flights">
-      <p><strong>Airline:</strong> {{ flight.airline }}</p>
-      <p><strong>From:</strong> {{ flight.source }}</p>
-      <p><strong>To:</strong> {{ flight.destination }}</p>
-      <p><strong>Date:</strong> {{ flight.date }}</p>
-      <p><strong>Price:</strong> ₹{{ flight.price }}</p>
-      <p><strong>Seats:</strong> {{ flight.availableSeats }}</p>
-    </div>
+  <div class="flight-card" *ngFor="let flight of flights">
+    <p><strong>Airline:</strong> {{ flight.airlineName }}</p>
+    <p><strong>From:</strong> {{ flight.fromPlace }}</p>
+    <p><strong>To:</strong> {{ flight.toPlace }}</p>
+    <p>
+      <strong>Date:</strong>
+      {{ flight.departure | date:'medium' }}
+    </p>
+    <p><strong>Price:</strong> ₹{{ flight.price }}</p>
+    <p><strong>Seats:</strong> {{ flight.availableSeats }}</p>
   </div>
 
 </div>
-
