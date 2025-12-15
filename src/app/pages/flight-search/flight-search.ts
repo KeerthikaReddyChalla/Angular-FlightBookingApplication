@@ -1,14 +1,16 @@
 import { Component } from '@angular/core';
-import { FlightService } from '../../services/flight';
-
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-flight-search',
-  templateUrl: './flight-search.component.html',
-  styleUrls: ['./flight-search.component.css']
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './flight-search.html',
+  styleUrls: ['./flight-search.css']
 })
 export class FlightSearchComponent {
-
 
   form = {
     source: '',
@@ -16,20 +18,25 @@ export class FlightSearchComponent {
     date: ''
   };
 
-
   flights: any[] = [];
+  searched = false;
 
- 
-  constructor(private flightService: FlightService) {}
+  constructor(private http: HttpClient) {}
 
-  search() {
-    this.flightService.search(this.form).subscribe({
-      next: (data: any[]) => {
-        this.flights = data;
+  searchFlights() {
+    const url = `http://localhost:8080/api/flight/search
+      ?source=${this.form.source}
+      &destination=${this.form.destination}
+      &date=${this.form.date}`;
+
+    this.http.get<any[]>(url).subscribe({
+      next: res => {
+        this.flights = res;
+        this.searched = true;
       },
-      error: (err) => {
-        console.error(err);
+      error: err => {
         alert('Failed to fetch flights');
+        console.error(err);
       }
     });
   }

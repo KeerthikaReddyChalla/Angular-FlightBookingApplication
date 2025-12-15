@@ -14,6 +14,11 @@ export class AuthService {
   }
 
   register(data: any) {
-    return this.http.post(`${this.API}/register`, data);
-  }
+  return this.http.post(
+    'http://localhost:8080/api/auth/register',
+    data,
+    { responseType: 'text' }   
+  );
+}
+
 }

@@ -1,26 +1,15 @@
-import { Injectable } from '@angular/core';
-import {TokenService} from '../services/token';
-import {
-  HttpInterceptor,
-  HttpRequest,
-  HttpHandler
-} from '@angular/common/http';
-@Injectable()
-export class AuthInterceptor implements HttpInterceptor {
+import { HttpInterceptorFn } from '@angular/common/http';
 
-  constructor(private tokenService: TokenService) {}
+export const authInterceptor: HttpInterceptorFn = (req, next) => {
+  const token = localStorage.getItem('token');
 
-  intercept(req: HttpRequest<any>, next: HttpHandler) {
-    const token = this.tokenService.getToken();
-
-    if (token) {
-      req = req.clone({
-        setHeaders: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-    }
-
-    return next.handle(req);
+  if (token) {
+    req = req.clone({
+      setHeaders: {
+        Authorization: `Bearer ${token}`
+      }
+    });
   }
-}
+
+  return next(req);
+};
