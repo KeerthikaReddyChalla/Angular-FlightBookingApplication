@@ -6,7 +6,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Navbar content */
+
 .nav-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -16,7 +16,7 @@
   justify-content: space-between;
 }
 
-/* Logo */
+
 .logo {
   font-size: 22px;
   font-weight: 600;
@@ -24,7 +24,7 @@
   letter-spacing: 0.5px;
 }
 
-/* Nav links */
+
 .nav-links {
   display: flex;
   gap: 18px;
@@ -39,18 +39,17 @@
   transition: background 0.25s ease;
 }
 
-/* Hover effect */
+
 .nav-links a:hover {
   background: rgba(255, 255, 255, 0.2);
 }
 
-/* Active route */
+
 .nav-links a.active {
   background: rgba(255, 255, 255, 0.3);
   font-weight: 500;
 }
 
-/* Responsive (mobile) */
 @media (max-width: 768px) {
   .nav-container {
     flex-direction: column;
