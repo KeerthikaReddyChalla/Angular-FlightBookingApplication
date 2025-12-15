@@ -6,6 +6,12 @@ import { AuthGuard } from './guards/auth-guard';
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'flights', component: FlightSearchComponent , canActivate: [AuthGuard]},
+  {
+  path: 'flights',
+  loadComponent: () =>
+    import('./pages/flight-search/flight-search')
+      .then(m => m.FlightSearchComponent)
+},
+
   { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];
