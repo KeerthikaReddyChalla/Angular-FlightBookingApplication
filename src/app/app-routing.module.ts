@@ -4,8 +4,11 @@ import { RegisterComponent } from './pages/register/register';
 import { FlightSearchComponent } from './pages/flight-search/flight-search';
 import { AuthGuard } from './guards/auth-guard';
 import { BookComponent } from './book/book';
+import { DashboardComponent } from './dashboard/dashboard';
 export const routes: Routes = [
   { path: 'book', component: BookComponent },
+  {
+    path: 'dashboard', component: DashboardComponent},
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   {

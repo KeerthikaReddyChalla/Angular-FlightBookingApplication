@@ -15,6 +15,7 @@
       <!-- LOGGED IN -->
       <ng-container *ngIf="isLoggedIn">
         <a routerLink="/flights" routerLinkActive="active">Search Flights</a>
+         <a routerLink="/dashboard">Dashboard</a>
         <button class="logout-btn" (click)="openLogoutDialog()">Logout</button>
       </ng-container>
 

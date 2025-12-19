@@ -29,3 +29,7 @@ button:hover {
   margin-top: 10px;
   border-radius: 5px;
 }
+select {
+  padding: 10px;
+  margin-right: 10px;
+}

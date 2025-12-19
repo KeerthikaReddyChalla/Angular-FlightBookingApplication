@@ -13,6 +13,11 @@ import { Router, RouterModule } from '@angular/router';
 })
 export class FlightSearchComponent {
 
+  // ENUM city list
+  cities = ['HYD', 'DEL', 'BLR', 'MUM', 'CHE', 'KOL', 'GOA'];
+
+  minDate: string = new Date().toISOString().split('T')[0];
+
   form = {
     from: '',
     to: '',
@@ -35,8 +40,8 @@ export class FlightSearchComponent {
     const end = `${this.form.date}T23:59:59`;
 
     const params = new HttpParams()
-      .set('from', this.form.from.trim())
-      .set('to', this.form.to.trim())
+      .set('from', this.form.from)
+      .set('to', this.form.to)
       .set('start', start)
       .set('end', end);
 
@@ -50,10 +55,9 @@ export class FlightSearchComponent {
         this.searched = true;
         this.loading = false;
       },
-      error: (err) => {
+      error: () => {
         this.loading = false;
         alert('Failed to fetch flights');
-        console.error(err);
       }
     });
   }

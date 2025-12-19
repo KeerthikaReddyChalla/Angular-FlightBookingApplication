@@ -26,13 +26,19 @@ export class LoginComponent {
     private tokenService: TokenService,
     private router: Router
   ) {}
-
+ private getEmailFromToken(token: string): string {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    return payload.sub;
+  }
   login() {
   this.authService.login(this.form).subscribe({
     next: (res) => {
 
       localStorage.setItem('token', res.token);
+      const email = this.getEmailFromToken(res.token);
+      localStorage.setItem('email', email);
 
+   
       window.location.reload();
 
       this.router.navigate(['/flights']);

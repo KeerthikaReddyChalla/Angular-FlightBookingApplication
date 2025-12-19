@@ -2,28 +2,39 @@
   <div class="container">
 
     <form (ngSubmit)="searchFlights()" class="search-form">
-      <input
-        type="text"
-        placeholder="From"
+
+      <!-- FROM DROPDOWN -->
+      <select
         [(ngModel)]="form.from"
         name="from"
         required
-      />
+      >
+        <option value="" disabled selected>Select From City</option>
+        <option *ngFor="let city of cities" [value]="city">
+          {{ city }}
+        </option>
+      </select>
 
-      <input
-        type="text"
-        placeholder="To"
+      <!-- TO DROPDOWN -->
+      <select
         [(ngModel)]="form.to"
         name="to"
         required
-      />
+      >
+        <option value="" disabled selected>Select To City</option>
+        <option *ngFor="let city of cities" [value]="city">
+          {{ city }}
+        </option>
+      </select>
 
+      <!-- DATE -->
       <input
-        type="date"
-        [(ngModel)]="form.date"
-        name="date"
-        required
-      />
+  type="date"
+  [(ngModel)]="form.date"
+  name="date"
+  [min]="minDate"
+  required
+/>
 
       <button type="submit">Search</button>
     </form>
@@ -40,14 +51,10 @@
       <p><strong>Airline:</strong> {{ flight.airlineName }}</p>
       <p><strong>From:</strong> {{ flight.fromPlace }}</p>
       <p><strong>To:</strong> {{ flight.toPlace }}</p>
-      <p>
-        <strong>Date:</strong>
-        {{ flight.departure | date:'medium' }}
-      </p>
+      <p><strong>Date:</strong> {{ flight.departure | date:'medium' }}</p>
       <p><strong>Price:</strong> ₹{{ flight.price }}</p>
       <p><strong>Seats:</strong> {{ flight.availableSeats }}</p>
 
-      <!-- BOOK BUTTON -->
       <button class="book-btn" (click)="bookFlight(flight.id)">
         Book
       </button>
