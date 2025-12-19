@@ -3,9 +3,17 @@
     <h2>Create Account</h2>
     <p class="subtitle">Register to start booking flights</p>
 
+    <!-- ✅ MESSAGE BLOCK (THIS WAS MISSING) -->
+    <p *ngIf="message"
+       [ngClass]="{
+         'success-msg': messageType === 'success',
+         'error-msg': messageType === 'error'
+       }">
+      {{ message }}
+    </p>
 
     <form (ngSubmit)="register()">
-     
+
       <div class="form-group">
         <label>Name</label>
         <input

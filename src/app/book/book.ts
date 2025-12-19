@@ -27,6 +27,11 @@ export class BookComponent {
 
   seatNumbers: string[] = [];
 
+  //booking result
+  bookingSuccess = false;
+  pnr = '';
+  errorMessage = '';
+
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient
@@ -49,6 +54,12 @@ export class BookComponent {
   }
 
   bookTicket() {
+
+    if (!this.name || !this.email) {
+      this.errorMessage = 'Name and Email are required';
+      return;
+    }
+
     const bookingPayload = {
       name: this.name,
       email: this.email,
@@ -57,25 +68,23 @@ export class BookComponent {
       meal: this.meal,
       seatNumbers: this.seatNumbers
     };
-    if (!this.name || !this.email) {
-  alert('Name and Email are required');
-  return;
-}
-
 
     console.log('Sending payload:', bookingPayload);
 
-    this.http.post(
+    this.http.post<any>(
       `http://localhost:8080/api/booking/flight/${this.flightId}`,
       bookingPayload
     ).subscribe({
       next: (res) => {
-        alert('Booking successful');
-        console.log(res);
+        this.bookingSuccess = true;
+        this.pnr = res.pnr;   //backend-generated PNR
+        this.errorMessage = '';
+        console.log('Booking response:', res);
       },
       error: (err) => {
         console.error(err);
-        alert('Booking failed');
+        this.errorMessage = 'Booking failed. Please try again.';
+        this.bookingSuccess = false;
       }
     });
   }

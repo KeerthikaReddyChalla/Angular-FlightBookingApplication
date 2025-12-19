@@ -1,6 +1,17 @@
 <div class="booking-container">
   <h2>Flight Booking</h2>
 
+  <!-- ✅ SUCCESS MESSAGE -->
+  <div *ngIf="bookingSuccess" class="booking-success">
+    <p>✅ Booking Successful</p>
+    <p><strong>PNR:</strong> {{ pnr }}</p>
+  </div>
+
+  <!-- ❌ ERROR MESSAGE -->
+  <div *ngIf="errorMessage" class="booking-error">
+    {{ errorMessage }}
+  </div>
+
   <!-- USER DETAILS -->
   <input
     type="text"

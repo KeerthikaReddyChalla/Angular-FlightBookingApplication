@@ -51,3 +51,19 @@ select, input {
 .confirm-btn:hover {
   background: #125ca1;
 }
+.booking-success {
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: #ecfdf5;
+  border-left: 4px solid green;
+  color: #065f46;
+  font-weight: 600;
+}
+
+.booking-error {
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: #fef2f2;
+  border-left: 4px solid red;
+  color: #991b1b;
+}
