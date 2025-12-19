@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-flight-search',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './flight-search.html',
   styleUrls: ['./flight-search.css']
 })
@@ -22,7 +23,10 @@ export class FlightSearchComponent {
   searched = false;
   loading = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) {}
 
   searchFlights() {
     this.loading = true;
@@ -38,8 +42,8 @@ export class FlightSearchComponent {
 
     this.http.post<any[]>(
       'http://localhost:8080/api/flight/search',
-      null,                    
-      { params }               
+      null,
+      { params }
     ).subscribe({
       next: (res) => {
         this.flights = res;
@@ -52,5 +56,9 @@ export class FlightSearchComponent {
         console.error(err);
       }
     });
+  }
+
+  bookFlight(flightId: string) {
+    this.router.navigate(['/book', flightId]);
   }
 }

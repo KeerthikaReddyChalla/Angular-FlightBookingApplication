@@ -3,7 +3,9 @@ import { LoginComponent } from './pages/login/login';
 import { RegisterComponent } from './pages/register/register';
 import { FlightSearchComponent } from './pages/flight-search/flight-search';
 import { AuthGuard } from './guards/auth-guard';
+import { BookComponent } from './book/book';
 export const routes: Routes = [
+  { path: 'book', component: BookComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   {
@@ -13,5 +15,11 @@ export const routes: Routes = [
       .then(m => m.FlightSearchComponent)
 },
 
-  { path: '', redirectTo: 'login', pathMatch: 'full' }
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  {
+  path: 'book/:flightId',
+  loadComponent: () =>
+    import('./book/book').then(m => m.BookComponent)
+}
+
 ];

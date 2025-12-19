@@ -1,0 +1,82 @@
+<div class="booking-container">
+  <h2>Flight Booking</h2>
+
+  <!-- USER DETAILS -->
+  <input
+    type="text"
+    placeholder="Name"
+    [(ngModel)]="name"
+    name="name"
+    required
+  />
+
+  <input
+    type="email"
+    placeholder="Email"
+    [(ngModel)]="email"
+    name="email"
+    required
+  />
+
+  <!-- Passenger count -->
+  <div class="form-group">
+    <label>Number of Passengers</label>
+    <select
+      [(ngModel)]="passengerCount"
+      name="passengerCount"
+      (change)="updatePassengers()"
+    >
+      <option *ngFor="let n of [1,2,3,4,5]" [value]="n">
+        {{ n }}
+      </option>
+    </select>
+  </div>
+
+  <!-- Passenger details -->
+  <div *ngFor="let p of passengers; let i = index" class="passenger-card">
+    <h4>Passenger {{ i + 1 }}</h4>
+
+    <input
+      type="text"
+      placeholder="Name"
+      [(ngModel)]="p.name"
+      name="pname{{i}}"
+      required
+    />
+
+    <input
+      type="number"
+      placeholder="Age"
+      [(ngModel)]="p.age"
+      name="page{{i}}"
+      required
+    />
+
+    <select
+      [(ngModel)]="p.gender"
+      name="pgender{{i}}"
+      required
+    >
+      <option value="">Select Gender</option>
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+    </select>
+  </div>
+
+  <!-- Meal -->
+  <select [(ngModel)]="meal" name="meal">
+    <option value="Veg">Veg</option>
+    <option value="Non-Veg">Non-Veg</option>
+  </select>
+
+  <!-- Seat numbers -->
+  <input
+    type="text"
+    placeholder="Seat Numbers (comma separated)"
+    (input)="seatNumbers = $any($event.target).value.split(',')"
+  />
+
+  <button class="confirm-btn" (click)="bookTicket()">
+    Confirm Booking
+  </button>
+</div>

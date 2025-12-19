@@ -1,52 +1,57 @@
 <div class="flight-wrapper">
-<div class="container">
+  <div class="container">
 
-  <form (ngSubmit)="searchFlights()" class="search-form">
-    <input
-      type="text"
-      placeholder="From"
-      [(ngModel)]="form.from"
-      name="from"
-      required
-    />
+    <form (ngSubmit)="searchFlights()" class="search-form">
+      <input
+        type="text"
+        placeholder="From"
+        [(ngModel)]="form.from"
+        name="from"
+        required
+      />
 
-    <input
-      type="text"
-      placeholder="To"
-      [(ngModel)]="form.to"
-      name="to"
-      required
-    />
+      <input
+        type="text"
+        placeholder="To"
+        [(ngModel)]="form.to"
+        name="to"
+        required
+      />
 
-    <input
-      type="date"
-      [(ngModel)]="form.date"
-      name="date"
-      required
-    />
+      <input
+        type="date"
+        [(ngModel)]="form.date"
+        name="date"
+        required
+      />
 
-    <button type="submit">Search</button>
-  </form>
+      <button type="submit">Search</button>
+    </form>
 
-  <hr />
+    <hr />
 
-  <h2 *ngIf="searched">Available Flights</h2>
+    <h2 *ngIf="searched">Available Flights</h2>
 
-  <div *ngIf="searched && flights.length === 0">
-    <p>No flights found.</p>
+    <div *ngIf="searched && flights.length === 0">
+      <p>No flights found.</p>
+    </div>
+
+    <div class="flight-card" *ngFor="let flight of flights">
+      <p><strong>Airline:</strong> {{ flight.airlineName }}</p>
+      <p><strong>From:</strong> {{ flight.fromPlace }}</p>
+      <p><strong>To:</strong> {{ flight.toPlace }}</p>
+      <p>
+        <strong>Date:</strong>
+        {{ flight.departure | date:'medium' }}
+      </p>
+      <p><strong>Price:</strong> ₹{{ flight.price }}</p>
+      <p><strong>Seats:</strong> {{ flight.availableSeats }}</p>
+
+      <!-- BOOK BUTTON -->
+      <button class="book-btn" (click)="bookFlight(flight.id)">
+        Book
+      </button>
+    </div>
+
   </div>
-
-  <div class="flight-card" *ngFor="let flight of flights">
-    <p><strong>Airline:</strong> {{ flight.airlineName }}</p>
-    <p><strong>From:</strong> {{ flight.fromPlace }}</p>
-    <p><strong>To:</strong> {{ flight.toPlace }}</p>
-    <p>
-      <strong>Date:</strong>
-      {{ flight.departure | date:'medium' }}
-    </p>
-    <p><strong>Price:</strong> ₹{{ flight.price }}</p>
-    <p><strong>Seats:</strong> {{ flight.availableSeats }}</p>
-  </div>
-
-</div>
 </div>
