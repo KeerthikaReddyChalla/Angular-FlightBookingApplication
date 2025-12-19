@@ -1,93 +1,102 @@
-<div class="booking-container">
-  <h2>Flight Booking</h2>
+<div class="booking-wrapper">
 
-  <!-- ✅ SUCCESS MESSAGE -->
-  <div *ngIf="bookingSuccess" class="booking-success">
-    <p>✅ Booking Successful</p>
-    <p><strong>PNR:</strong> {{ pnr }}</p>
-  </div>
+  <div class="booking-card">
 
-  <!-- ❌ ERROR MESSAGE -->
-  <div *ngIf="errorMessage" class="booking-error">
-    {{ errorMessage }}
-  </div>
+    <h2>Book Your Flight</h2>
+    <br>
 
-  <!-- USER DETAILS -->
-  <input
-    type="text"
-    placeholder="Name"
-    [(ngModel)]="name"
-    name="name"
-    required
-  />
+    <!-- SUCCESS -->
+    <div *ngIf="bookingSuccess" class="booking-success">
+      <p>✅ Booking Successful</p>
+      <p><strong>PNR:</strong> {{ pnr }}</p>
+    </div>
 
-  <input
-    type="email"
-    placeholder="Email"
-    [(ngModel)]="email"
-    name="email"
-    required
-  />
+    <!-- ERROR -->
+    <div *ngIf="errorMessage" class="booking-error">
+      {{ errorMessage }}
+    </div>
 
-  <!-- Passenger count -->
-  <div class="form-group">
-    <label>Number of Passengers</label>
-    <select
-      [(ngModel)]="passengerCount"
-      name="passengerCount"
-      (change)="updatePassengers()"
-    >
-      <option *ngFor="let n of [1,2,3,4,5]" [value]="n">
-        {{ n }}
-      </option>
-    </select>
-  </div>
+    <!-- PRIMARY DETAILS -->
+    <div class="form-grid">
 
-  <!-- Passenger details -->
-  <div *ngFor="let p of passengers; let i = index" class="passenger-card">
-    <h4>Passenger {{ i + 1 }}</h4>
+      <input
+        type="text"
+        placeholder="Your Name"
+        [(ngModel)]="name"
+        required
+      />
 
+      <input
+        type="email"
+        placeholder="Email Address"
+        [(ngModel)]="email"
+        required
+      />
+
+      <div class="form-group">
+        <label>Passengers</label>
+        <select
+          [(ngModel)]="passengerCount"
+          (change)="updatePassengers()"
+        >
+          <option *ngFor="let n of [1,2,3,4,5]" [value]="n">
+            {{ n }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Meal Preference</label>
+        <select [(ngModel)]="meal">
+          <option value="Veg">Veg</option>
+          <option value="Non-Veg">Non-Veg</option>
+        </select>
+      </div>
+
+    </div>
+
+    <!-- PASSENGERS -->
+    <div class="passenger-section">
+      <h3>Passenger Details</h3>
+
+      <div *ngFor="let p of passengers; let i = index" class="passenger-card">
+        <h4>Passenger {{ i + 1 }}</h4>
+
+        <div class="passenger-grid">
+          <input
+            type="text"
+            placeholder="Name"
+            [(ngModel)]="p.name"
+          />
+
+          <input
+            type="number"
+            placeholder="Age"
+            [(ngModel)]="p.age"
+          />
+
+          <select [(ngModel)]="p.gender">
+            <option value="">Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEATS -->
     <input
+      class="seat-input"
       type="text"
-      placeholder="Name"
-      [(ngModel)]="p.name"
-      name="pname{{i}}"
-      required
+      placeholder="Seat Numbers (comma separated)"
+      (input)="seatNumbers = $any($event.target).value.split(',')"
     />
 
-    <input
-      type="number"
-      placeholder="Age"
-      [(ngModel)]="p.age"
-      name="page{{i}}"
-      required
-    />
+    <!-- ACTION -->
+    <button class="confirm-btn" (click)="bookTicket()">
+      Confirm Booking
+    </button>
 
-    <select
-      [(ngModel)]="p.gender"
-      name="pgender{{i}}"
-      required
-    >
-      <option value="">Select Gender</option>
-      <option value="Male">Male</option>
-      <option value="Female">Female</option>
-    </select>
   </div>
 
-  <!-- Meal -->
-  <select [(ngModel)]="meal" name="meal">
-    <option value="Veg">Veg</option>
-    <option value="Non-Veg">Non-Veg</option>
-  </select>
-
-  <!-- Seat numbers -->
-  <input
-    type="text"
-    placeholder="Seat Numbers (comma separated)"
-    (input)="seatNumbers = $any($event.target).value.split(',')"
-  />
-
-  <button class="confirm-btn" (click)="bookTicket()">
-    Confirm Booking
-  </button>
 </div>

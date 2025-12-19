@@ -1,40 +1,70 @@
 <div class="dashboard-container">
 
-  <h2>My Booking History</h2>
-
-  <div *ngIf="loading">
-    <p>Loading bookings...</p>
+  <!-- HEADER -->
+  <div class="dashboard-header">
+    <h2>My Bookings</h2>
   </div>
 
-  <div *ngIf="!loading && bookings.length === 0">
-    <p>No bookings found.</p>
+  <!-- LOADING -->
+  <div *ngIf="loading" class="loading">
+    Loading booking history...
   </div>
 
-  <div class="booking-card" *ngFor="let booking of bookings">
+  <!-- EMPTY -->
+  <div *ngIf="!loading && bookings.length === 0" class="empty">
+    No bookings found.
+  </div>
 
-    <p><strong>PNR:</strong> {{ booking.pnr }}</p>
-    <p><strong>Flight:</strong> {{ booking.flightId }}</p>
-    <p><strong>Email:</strong> {{ booking.email }}</p>
-    <p><strong>Passengers:</strong> {{ booking.passengers?.length }}</p>
+  <!-- BOOKINGS GRID -->
+  <div class="booking-grid">
+    <div class="booking-card" *ngFor="let booking of bookings">
+
+      <div class="card-header">
+        <span class="pnr">PNR: {{ booking.pnr }}</span>
+        <span
+          class="status"
+          [class.cancelled]="booking.cancelled"
+        >
+          {{ booking.cancelled ? 'Cancelled' : 'Confirmed' }}
+        </span>
+      </div>
+
+      <div class="card-body">
+        <p><strong>Flight ID:</strong> {{ booking.flightId }}</p>
+        <p><strong>Email:</strong> {{ booking.email }}</p>
+        <p><strong>Passengers:</strong> {{ booking.passengers?.length }}</p>
+        <p>
+          <strong>Booked On:</strong>
+          {{ booking.bookingTime | date:'medium' }}
+        </p>
+      </div>
+
+      <button
+        class="cancel-btn"
+        *ngIf="!booking.cancelled"
+        (click)="openCancelDialog(booking.pnr)"
+      >
+        Cancel Ticket
+      </button>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- CONFIRM DIALOG -->
+<div class="dialog-backdrop" *ngIf="showConfirmDialog">
+  <div class="dialog-box">
+    <h3>Cancel Booking?</h3>
     <p>
-      <strong>Booked On:</strong>
-      {{ booking.bookingTime | date:'medium' }}
+      Are you sure you want to cancel this ticket?
+      <br />
+      <strong>PNR: {{ selectedPnr }}</strong>
     </p>
 
-    <!-- STATUS -->
-    <p class="status cancelled" *ngIf="booking.cancelled">
-      ❌ Cancelled
-    </p>
-
-    <!-- CANCEL BUTTON -->
-    <button
-      class="cancel-btn"
-      *ngIf="!booking.cancelled"
-      (click)="cancelBooking(booking.pnr)"
-    >
-      Cancel Ticket
-    </button>
-
+    <div class="dialog-actions">
+      <button class="no-btn" (click)="closeDialog()">No</button>
+      <button class="yes-btn" (click)="confirmCancel()">Yes, Cancel</button>
+    </div>
   </div>
-
 </div>

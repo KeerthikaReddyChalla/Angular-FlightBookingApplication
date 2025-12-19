@@ -5,6 +5,7 @@ import { FlightSearchComponent } from './pages/flight-search/flight-search';
 import { AuthGuard } from './guards/auth-guard';
 import { BookComponent } from './book/book';
 import { DashboardComponent } from './dashboard/dashboard';
+import { HomeComponent } from './pages/home/home';
 export const routes: Routes = [
   { path: 'book', component: BookComponent },
   {
@@ -18,7 +19,8 @@ export const routes: Routes = [
       .then(m => m.FlightSearchComponent)
 },
 
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
   path: 'book/:flightId',
   loadComponent: () =>

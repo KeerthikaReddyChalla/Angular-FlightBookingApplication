@@ -134,3 +134,33 @@
 .yes-btn:hover {
   background-color: #b91c1c;
 }
+/* =========================
+   HOME PAGE TRANSPARENT NAV
+   ========================= */
+
+.navbar.home-navbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+  z-index: 20;
+}
+
+/* Text color on hero */
+.navbar.home-navbar .logo,
+.navbar.home-navbar .nav-links a,
+.navbar.home-navbar .logout-btn {
+  color: white !important;
+}
+
+/* Hover effect (subtle) */
+.navbar.home-navbar .nav-links a:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Logout hover */
+.navbar.home-navbar .logout-btn:hover {
+  color: #fca5a5;
+}

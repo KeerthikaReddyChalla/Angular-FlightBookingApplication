@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterModule, NavigationEnd } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -13,11 +13,21 @@ export class App {
 
   protected readonly title = signal('flight-booking-ui');
 
+  isHomePage = false;
   isLoggedIn = false;
   showLogoutDialog = false;
 
   constructor(private router: Router) {
+
+    // initial check
     this.checkLoginStatus();
+
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.isHomePage = event.urlAfterRedirects === '/home';
+        this.checkLoginStatus(); // ✅ IMPORTANT
+      }
+    });
   }
 
   // check login using token
@@ -38,9 +48,9 @@ export class App {
   // confirm logout
   confirmLogout() {
     localStorage.removeItem('token');
-    localStorage.removeItem('email'); 
+    localStorage.removeItem('email');
     this.showLogoutDialog = false;
     this.isLoggedIn = false;
-    this.router.navigate(['/login']);
+    this.router.navigate(['/home']);
   }
 }
