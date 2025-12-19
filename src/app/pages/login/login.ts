@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+
 @Component({
   selector: 'app-login',
   standalone: true,          
@@ -27,14 +28,20 @@ export class LoginComponent {
   ) {}
 
   login() {
-    this.authService.login(this.form).subscribe({
-      next: (res: any) => {
-        this.tokenService.saveToken(res.token);
-        this.router.navigate(['/flights']);
-      },
-      error: () => {
-        alert('Login failed');
-      }
-    });
-  }
+  this.authService.login(this.form).subscribe({
+    next: (res) => {
+
+      localStorage.setItem('token', res.token);
+
+      window.location.reload();
+
+      this.router.navigate(['/flights']);
+    },
+    error: (err) => {
+      console.error(err);
+     
+    }
+  });
+}
+
 }

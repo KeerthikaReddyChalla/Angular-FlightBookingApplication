@@ -5,11 +5,34 @@
     </div>
 
     <nav class="nav-links">
-      <a routerLink="/login" routerLinkActive="active">Login</a>
-      <a routerLink="/register" routerLinkActive="active">Register</a>
-      <a routerLink="/flights" routerLinkActive="active">Search Flights</a>
+
+      <!-- NOT LOGGED IN -->
+      <ng-container *ngIf="!isLoggedIn">
+        <a routerLink="/login" routerLinkActive="active">Login</a>
+        <a routerLink="/register" routerLinkActive="active">Register</a>
+      </ng-container>
+
+      <!-- LOGGED IN -->
+      <ng-container *ngIf="isLoggedIn">
+        <a routerLink="/flights" routerLinkActive="active">Search Flights</a>
+        <button class="logout-btn" (click)="openLogoutDialog()">Logout</button>
+      </ng-container>
+
     </nav>
   </div>
 </header>
 
 <router-outlet></router-outlet>
+
+
+<div class="dialog-backdrop" *ngIf="showLogoutDialog">
+  <div class="dialog-box">
+    <h3>Confirm Logout</h3>
+    <p>Are you sure you want to logout?</p>
+
+    <div class="dialog-actions">
+      <button class="yes-btn" (click)="confirmLogout()">Yes</button>
+      <button class="no-btn" (click)="cancelLogout()">No</button>
+    </div>
+  </div>
+</div>
