@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register',
@@ -20,32 +21,44 @@ export class RegisterComponent {
     password: ''
   };
 
-  message = '';
-  messageType: 'success' | 'error' | '' = '';
-
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {}
 
   register() {
-    this.message = '';
-    this.messageType = '';
-
-    this.authService.register(this.form).subscribe({
-      next: (res) => {
-        this.message = res; // "User registered"
-        this.messageType = 'success';
-
-        setTimeout(() => {
-          this.router.navigate(['/login']);
-        }, 1500);
-      },
-      error: (err) => {
-        console.error(err);
-        this.message = 'Registration failed';
-        this.messageType = 'error';
+this.authService.register(this.form).subscribe({
+  next: (res) => {
+    this.snackBar.open(
+      res || 'User registered successfully',
+      'Close',
+      {
+        duration: 3000,
+        horizontalPosition: 'right',
+        verticalPosition: 'bottom',
+        panelClass: ['success-toast']
       }
-    });
+    );
+
+    setTimeout(() => {
+      this.router.navigate(['/login']);
+    }, 1500);
+  },
+  error: (err) => {
+    this.snackBar.open(
+      err.error || 'User already registered',
+      'Close',
+      {
+        duration: 3500,
+        horizontalPosition: 'right',
+        verticalPosition: 'bottom',
+        panelClass: ['error-toast']
+      }
+    );
+  }
+});
+
+    
   }
 }

@@ -12,3 +12,32 @@ html, body {
   font-family: Arial, sans-serif;
 }
 
+.mat-mdc-snack-bar-container {
+  background: transparent;
+  box-shadow: none;
+  padding: 0 ;
+}
+
+.mat-mdc-snack-bar-container.error-toast .mdc-snackbar__surface {
+  background-color: #fdecea; 
+  color: #b71c1c;
+  border-left: 4px solid #e53935;
+  padding: 14px 18px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  font-weight: 500;
+}
+
+.mat-mdc-snack-bar-container.success-toast .mdc-snackbar__surface {
+  background-color: #edf7ed;
+  color: #1b5e20;
+  border-left: 4px solid #43a047;
+  padding: 14px 18px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  font-weight: 500;
+}
+
+.mat-mdc-snack-bar-container .mdc-snackbar__action {
+  color: inherit;
+  font-weight: 600;
+}
+

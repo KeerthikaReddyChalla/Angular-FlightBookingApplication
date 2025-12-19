@@ -1,33 +1,16 @@
 <div class="booking-container">
   <h2>Flight Booking</h2>
 
-  <!-- ✅ SUCCESS MESSAGE -->
+  <!-- SUCCESS -->
   <div *ngIf="bookingSuccess" class="booking-success">
     <p>✅ Booking Successful</p>
     <p><strong>PNR:</strong> {{ pnr }}</p>
   </div>
 
-  <!-- ❌ ERROR MESSAGE -->
+  <!-- ERROR -->
   <div *ngIf="errorMessage" class="booking-error">
     {{ errorMessage }}
   </div>
-
-  <!-- USER DETAILS -->
-  <input
-    type="text"
-    placeholder="Name"
-    [(ngModel)]="name"
-    name="name"
-    required
-  />
-
-  <input
-    type="email"
-    placeholder="Email"
-    [(ngModel)]="email"
-    name="email"
-    required
-  />
 
   <!-- Passenger count -->
   <div class="form-group">

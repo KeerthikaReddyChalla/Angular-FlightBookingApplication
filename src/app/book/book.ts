@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-book',
@@ -15,10 +15,10 @@ export class BookComponent {
 
   flightId!: string;
 
-  name = '';
+  // logged-in user info
   email = '';
-  meal = 'Veg';
 
+  meal = 'Veg';
   passengerCount = 1;
 
   passengers: any[] = [
@@ -27,19 +27,24 @@ export class BookComponent {
 
   seatNumbers: string[] = [];
 
-  //booking result
   bookingSuccess = false;
   pnr = '';
   errorMessage = '';
 
   constructor(
     private route: ActivatedRoute,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) {}
 
   ngOnInit() {
     this.flightId = this.route.snapshot.paramMap.get('flightId')!;
-    console.log('Flight ID:', this.flightId);
+    this.email = localStorage.getItem('email') || '';
+
+    if (!this.email) {
+      this.errorMessage = 'Please login again';
+      this.router.navigate(['/login']);
+    }
   }
 
   updatePassengers() {
@@ -55,36 +60,51 @@ export class BookComponent {
 
   bookTicket() {
 
-    if (!this.name || !this.email) {
-      this.errorMessage = 'Name and Email are required';
+    const token = localStorage.getItem('token');
+    if (!token) {
+      this.errorMessage = 'Unauthorized. Please login again.';
       return;
     }
 
+    // basic validation
+    for (let p of this.passengers) {
+      if (!p.name || !p.gender || !p.age) {
+        this.errorMessage = 'Please fill all passenger details';
+        return;
+      }
+    }
+
     const bookingPayload = {
-      name: this.name,
-      email: this.email,
+      email: this.email,               
       seats: this.passengerCount,
       passengers: this.passengers,
       meal: this.meal,
       seatNumbers: this.seatNumbers
     };
 
-    console.log('Sending payload:', bookingPayload);
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
 
     this.http.post<any>(
       `http://localhost:8080/api/booking/flight/${this.flightId}`,
-      bookingPayload
+      bookingPayload,
+      { headers }
     ).subscribe({
       next: (res) => {
         this.bookingSuccess = true;
-        this.pnr = res.pnr;   //backend-generated PNR
+        this.pnr = res.pnr;
         this.errorMessage = '';
-        console.log('Booking response:', res);
       },
       error: (err) => {
         console.error(err);
-        this.errorMessage = 'Booking failed. Please try again.';
         this.bookingSuccess = false;
+
+        if (err.status === 400) {
+          this.errorMessage = err.error;
+        } else {
+          this.errorMessage = 'Booking failed. Please try again.';
+        }
       }
     });
   }
