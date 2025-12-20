@@ -4,28 +4,33 @@
     <form (ngSubmit)="searchFlights()" class="search-form">
 
       <!-- FROM DROPDOWN -->
-      <select
-        [(ngModel)]="form.from"
-        name="from"
-        required
-      >
-        <option value="" disabled selected>Select From City</option>
-        <option *ngFor="let city of cities" [value]="city">
-          {{ city }}
-        </option>
-      </select>
 
-      <!-- TO DROPDOWN -->
-      <select
-        [(ngModel)]="form.to"
-        name="to"
-        required
-      >
-        <option value="" disabled selected>Select To City</option>
-        <option *ngFor="let city of cities" [value]="city">
-          {{ city }}
-        </option>
-      </select>
+<select
+  [(ngModel)]="form.from"
+  name="from"
+  required
+>
+  <option value="" disabled>Select From City</option>
+  <option *ngFor="let city of cities" [value]="city">
+    {{ city }}
+  </option>
+</select>
+
+<!-- TO DROPDOWN -->
+<select
+  [(ngModel)]="form.to"
+  name="to"
+  required
+>
+  <option value="" disabled>Select To City</option>
+  <option
+    *ngFor="let city of cities"
+    [value]="city"
+    [disabled]="city === form.from"
+  >
+    {{ city }}
+  </option>
+</select>
 
       <!-- DATE -->
       <input

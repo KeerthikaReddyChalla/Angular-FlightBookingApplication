@@ -37,6 +37,10 @@
           <strong>Booked On:</strong>
           {{ booking.bookingTime | date:'medium' }}
         </p>
+        <p>
+          <strong>Departure date:</strong>
+          {{ booking.flightDeparture | date:'medium' }}
+        </p>
       </div>
 
       <button
