@@ -28,10 +28,10 @@ export class LoginComponent {
     private router: Router,
     private snackBar: MatSnackBar
   ) {}
- private getEmailFromToken(token: string): string {
-    const payload = JSON.parse(atob(token.split('.')[1]));
-    return payload.sub;
-  }
+//  private getEmailFromToken(token: string): string {
+//     const payload = JSON.parse(atob(token.split('.')[1]));
+//     return payload.sub;
+//   }
   login() {
   this.authService.login(this.form).subscribe({
     next: (res) => {
@@ -46,15 +46,15 @@ export class LoginComponent {
       }
     );
       localStorage.setItem('token', res.token);
-      const email = this.getEmailFromToken(res.token);
-      localStorage.setItem('email', email);
+      localStorage.setItem('email', this.form.email);
      const payload = JSON.parse(atob(res.token.split('.')[1]));
-localStorage.setItem('name', payload.name);
+     console.log(payload)
+      localStorage.setItem('name', payload.name);
 
-   
-      window.location.reload();
+    this.router.navigate(['/flights']);
+      // window.location.reload();
 
-      this.router.navigate(['/flights']);
+      
     },
     error: (err) => {
       this.snackBar.open(

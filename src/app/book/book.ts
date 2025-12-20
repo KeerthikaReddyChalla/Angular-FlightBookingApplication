@@ -76,8 +76,8 @@ export class BookComponent {
     }
 
     const bookingPayload = {
-      name: this.name,
-      email: this.email,           
+      name: localStorage.getItem('name'),
+      email: localStorage.getItem('email'),           
       seats: this.passengerCount,
       passengers: this.passengers,
       meal: this.meal,
