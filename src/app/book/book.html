@@ -7,7 +7,7 @@
 
     <!-- SUCCESS -->
     <div *ngIf="bookingSuccess" class="booking-success">
-      <p>✅ Booking Successful</p>
+      <p>Booking Successful</p>
       <p><strong>PNR:</strong> {{ pnr }}</p>
     </div>
 
@@ -18,20 +18,21 @@
 
     <!-- PRIMARY DETAILS -->
     <div class="form-grid">
-
-      <input
-        type="text"
-        placeholder="Your Name"
-        [(ngModel)]="name"
-        required
-      />
-
-      <input
-        type="email"
-        placeholder="Email Address"
-        [(ngModel)]="email"
-        required
-      />
+<!-- NAME (AUTO-FILLED) -->
+<input
+  type="text"
+  [value]="name"
+  readonly
+  class="readonly-input"
+/>
+     
+<!-- EMAIL (AUTO-FILLED) -->
+<input
+  type="email"
+  [value]="email"
+  readonly
+  class="readonly-input"
+/>
 
       <div class="form-group">
         <label>Passengers</label>

@@ -72,33 +72,38 @@ export class DashboardComponent implements OnInit {
   }
 
   confirmCancel() {
-    if (!this.selectedPnr) return;
+  if (!this.selectedPnr) return;
 
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${this.token}`
-    });
+  const headers = new HttpHeaders({
+    Authorization: `Bearer ${this.token}`
+  });
 
-    this.http.delete(
-      `http://localhost:8080/api/booking/cancel/${this.selectedPnr}`,
-      { headers }
-    ).subscribe({
-      next: () => {
-        const booking = this.bookings.find(b => b.pnr === this.selectedPnr);
-        if (booking) booking.cancelled = true;
-
+  this.http.delete(
+    `http://localhost:8080/api/booking/cancel/${this.selectedPnr}`,
+    {
+      headers,
+      observe: 'response' 
+    }
+  ).subscribe({
+    next: (res) => {
+ 
+      if (res.status === 204) {
         this.showSuccessToast('Booking cancelled successfully');
-        this.closeDialog();
-      },
-      error: (err) => {
-        if (err.status === 400) {
-          this.showErrorToast('Cannot cancel within 24 hours of departure');
-        } else {
-          this.showErrorToast('Failed to cancel booking');
-        }
-        this.closeDialog();
+        this.loadBookings();   
       }
-    });
-  }
+      this.closeDialog();
+    },
+    error: (err) => {
+      if (err.status === 400) {
+        this.showErrorToast(err.error || 'Cannot cancel within 24 hours of departure');
+      } else {
+        this.showErrorToast('Failed to cancel booking');
+      }
+      this.closeDialog();
+    }
+  });
+}
+
 
   // toasts
   showSuccessToast(message: string) {

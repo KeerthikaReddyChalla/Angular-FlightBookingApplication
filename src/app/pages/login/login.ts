@@ -48,6 +48,8 @@ export class LoginComponent {
       localStorage.setItem('token', res.token);
       const email = this.getEmailFromToken(res.token);
       localStorage.setItem('email', email);
+     const payload = JSON.parse(atob(res.token.split('.')[1]));
+localStorage.setItem('name', payload.name);
 
    
       window.location.reload();

@@ -7,7 +7,7 @@
 .hero {
   position: relative;
   height: 100vh;
-  background-image: url('/hero-flight3.jpg'); /* put image here */
+  background-image: url('/hero-flight.avif'); /* put image here */
   background-size: cover;
   background-position: center;
   display: flex;
