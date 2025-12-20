@@ -3,6 +3,21 @@
   <!-- HEADER -->
   <div class="dashboard-header">
     <h2>My Bookings</h2>
+
+
+  <!-- FILTER DROPDOWN -->
+  <select
+  class="status-filter"
+  [(ngModel)]="filter"
+  (change)="applyFilter()"
+>
+  <option value="all">All</option>
+  <option value="confirmed">Confirmed</option>
+  <option value="cancelled">Cancelled</option>
+</select>
+
+
+
   </div>
 
   <!-- LOADING -->
@@ -11,13 +26,13 @@
   </div>
 
   <!-- EMPTY -->
-  <div *ngIf="!loading && bookings.length === 0" class="empty">
+  <div *ngIf="!loading && filteredBookings.length === 0" class="empty">
     No bookings found.
   </div>
 
   <!-- BOOKINGS GRID -->
   <div class="booking-grid">
-    <div class="booking-card" *ngFor="let booking of bookings">
+    <div class="booking-card" *ngFor="let booking of filteredBookings">
 
       <div class="card-header">
         <span class="pnr">PNR: {{ booking.pnr }}</span>

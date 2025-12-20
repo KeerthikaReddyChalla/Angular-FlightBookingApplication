@@ -35,7 +35,7 @@ export class FlightSearchComponent {
 
   searchFlights() {
     this.loading = true;
-
+    this.searched = false;
     const start = `${this.form.date}T00:00:00`;
     const end = `${this.form.date}T23:59:59`;
 
@@ -49,7 +49,8 @@ export class FlightSearchComponent {
       'http://localhost:8080/api/flight/search',
       null,
       { params }
-    ).subscribe({
+    )
+    .subscribe({
       next: (res) => {
         this.flights = res;
         this.searched = true;

@@ -2,21 +2,26 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, MatSnackBarModule],
+  imports: [CommonModule, MatSnackBarModule, FormsModule],
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css']
 })
 export class DashboardComponent implements OnInit {
 
   bookings: any[] = [];
+  filteredBookings: any[] = [];
+
   loading = true;
 
   email!: string;
   token!: string;
+
+  // filter state
+  filter: 'all' | 'confirmed' | 'cancelled' = 'all';
 
   // dialog state
   showConfirmDialog = false;
@@ -49,7 +54,8 @@ export class DashboardComponent implements OnInit {
       { headers }
     ).subscribe({
       next: (res) => {
-        this.bookings = res;
+        this.bookings = res || [];
+        this.applyFilter(); 
         this.loading = false;
       },
       error: () => {
@@ -59,51 +65,69 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  // open dialog
+  //filter logic
+  applyFilter() {
+    let data = [...this.bookings];
+
+    //confirmed first, cancelled later (initial order)
+    data.sort((a, b) => Number(a.cancelled) - Number(b.cancelled));
+
+    if (this.filter === 'confirmed') {
+      this.filteredBookings = data.filter(b => !b.cancelled);
+    } else if (this.filter === 'cancelled') {
+      this.filteredBookings = data.filter(b => b.cancelled);
+    } else {
+      this.filteredBookings = data;
+    }
+  }
+
+  setFilter(value: 'all' | 'confirmed' | 'cancelled') {
+    this.filter = value;
+    this.applyFilter();
+  }
+
+  // dialog
   openCancelDialog(pnr: string) {
     this.selectedPnr = pnr;
     this.showConfirmDialog = true;
   }
 
-  // close dialog
   closeDialog() {
     this.showConfirmDialog = false;
     this.selectedPnr = null;
   }
 
   confirmCancel() {
-  if (!this.selectedPnr) return;
+    if (!this.selectedPnr) return;
 
-  const headers = new HttpHeaders({
-    Authorization: `Bearer ${this.token}`
-  });
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`
+    });
 
-  this.http.delete(
-    `http://localhost:8080/api/booking/cancel/${this.selectedPnr}`,
-    {
-      headers,
-      observe: 'response' 
-    }
-  ).subscribe({
-    next: (res) => {
- 
-      if (res.status === 204) {
-        this.showSuccessToast('Booking cancelled successfully');
-        this.loadBookings();   
+    this.http.delete(
+      `http://localhost:8080/api/booking/cancel/${this.selectedPnr}`,
+      {
+        headers,
+        observe: 'response'
       }
-      this.closeDialog();
-    },
-    error: (err) => {
-      if (err.status === 400) {
-        this.showErrorToast(err.error || 'Cannot cancel within 24 hours of departure');
-      } else {
-        this.showErrorToast('Failed to cancel booking');
+    ).subscribe({
+      next: (res) => {
+        if (res.status === 204) {
+          this.showSuccessToast('Booking cancelled successfully');
+          this.loadBookings(); // reload & reapply filter
+        }
+        this.closeDialog();
+      },
+      error: (err) => {
+        if (err.status === 400) {
+          this.showErrorToast(err.error || 'Cannot cancel within 24 hours of departure');
+        } else {
+          this.showErrorToast('Failed to cancel booking');
+        }
+        this.closeDialog();
       }
-      this.closeDialog();
-    }
-  });
-}
-
+    });
+  }
 
   // toasts
   showSuccessToast(message: string) {
