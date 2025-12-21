@@ -1,0 +1,17 @@
+<div class="seat-map" *ngIf="seats.length > 0; else noSeats">
+
+  <div
+    *ngFor="let seat of seats"
+    class="seat"
+    [class.booked]="seat.booked"
+    [class.selected]="selectedSeats.includes(seat.seatNumber)"
+    (click)="toggleSeat(seat)"
+  >
+    {{ seat.seatNumber }}
+  </div>
+
+</div>
+
+<ng-template #noSeats>
+  <p class="no-seats">Seat layout not available</p>
+</ng-template>

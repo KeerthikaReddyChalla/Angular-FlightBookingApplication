@@ -3,15 +3,17 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { SeatMapComponent } from '../seat-map/seat-map';
+import { ViewChild} from '@angular/core';
+import { OnInit } from '@angular/core';
 @Component({
   selector: 'app-book',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, SeatMapComponent],
   templateUrl: './book.html',
   styleUrls: ['./book.css']
 })
-export class BookComponent {
+export class BookComponent implements OnInit {
 
   flightId!: string;
 
@@ -37,6 +39,8 @@ export class BookComponent {
     private router: Router
   ) {}
 
+
+
   ngOnInit() {
     this.flightId = this.route.snapshot.paramMap.get('flightId')!;
     this.email = localStorage.getItem('email') || '';
@@ -48,6 +52,12 @@ export class BookComponent {
       this.router.navigate(['/login']);
     }
   }
+//   @ViewChild('seatMap') seatMap!: SeatMapComponent;
+// ngAfterViewInit() {
+//   setTimeout(() => {
+//     this.seatMap.loadSeats(this.flightId);
+//   });
+// }
 
   updatePassengers() {
     this.passengers = [];
@@ -64,9 +74,16 @@ export class BookComponent {
     const token = localStorage.getItem('token');
     if (!token) {
       this.errorMessage = 'Unauthorized. Please login again.';
+      
+
       return;
     }
+    // this.seatNumbers = this.seatMap.selectedSeats;
 
+    if (this.seatNumbers.length !== this.passengerCount) {
+      this.errorMessage = 'Please select seats equal to passenger count';
+      return;
+    }
     // basic validation
     for (let p of this.passengers) {
       if (!p.name || !p.gender || !p.age) {

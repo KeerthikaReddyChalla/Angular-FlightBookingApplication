@@ -1,0 +1,43 @@
+.seat-map {
+  display: grid;
+  grid-template-columns: repeat(6, 44px);
+  gap: 12px;
+  padding: 20px;
+  background: #f8fafc;
+  border-radius: 12px;
+  max-width: 360px;
+}
+
+.seat {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.seat:hover {
+  background: #c7d2fe;
+}
+
+.seat.selected {
+  background: #4f46e5;
+  color: white;
+}
+
+.seat.booked {
+  background: #9ca3af;
+  cursor: not-allowed;
+  color: white;
+}
+
+.no-seats {
+  color: #64748b;
+  font-size: 14px;
+  padding: 12px;
+}

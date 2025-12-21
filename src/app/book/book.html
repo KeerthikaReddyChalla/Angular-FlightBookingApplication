@@ -86,12 +86,17 @@
     </div>
 
     <!-- SEATS -->
-    <input
-      class="seat-input"
-      type="text"
-      placeholder="Seat Numbers (comma separated)"
-      (input)="seatNumbers = $any($event.target).value.split(',')"
-    />
+   
+    <h3>Select Seats</h3>
+
+
+<app-seat-map
+  [flightId]="flightId"
+  (seatsSelected)="seatNumbers = $event"
+></app-seat-map>
+
+
+<br>
 
     <!-- ACTION -->
     <button class="confirm-btn" (click)="bookTicket()">
