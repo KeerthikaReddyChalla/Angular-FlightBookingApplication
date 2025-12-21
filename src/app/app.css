@@ -164,3 +164,10 @@
 .navbar.home-navbar .logout-btn:hover {
   color: #fca5a5;
 }
+.profile-btn {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  margin-right: 10px;
+}

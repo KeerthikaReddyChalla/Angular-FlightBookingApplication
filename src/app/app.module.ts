@@ -48,7 +48,9 @@ export class App {
   // confirm logout
   confirmLogout() {
     this.showLogoutDialog = false;
-    this.auth.logout(); 
+    setTimeout(() => {
+    this.auth.logout();
+  });
   }
 
 }

@@ -25,7 +25,23 @@
          <a routerLink="/dashboard">Dashboard</a>
         
       </ng-container>
-      <button class="logout-btn" (click)="openLogoutDialog()"  *ngIf="auth.isLoggedIn()">Logout</button>
+      <ng-container *ngIf="auth.isLoggedIn()">
+
+  <!-- USER PROFILE ICON -->
+  
+
+  <button class="logout-btn" (click)="openLogoutDialog()">
+    Logout
+  </button>
+  <button
+    class="profile-btn"
+    routerLink="/profile"
+    title="Profile"
+  >
+    👤
+  </button>
+
+</ng-container>
     </nav>
   </div>
 </header>

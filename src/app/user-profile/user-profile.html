@@ -1,0 +1,71 @@
+<div class="profile-wrapper">
+
+  <!-- HEADER -->
+  <div class="profile-header">
+    <div class="profile-info">
+      <div class="avatar">
+        <!-- Placeholder profile image -->
+        <span>👤</span>
+      </div>
+
+      <div>
+        <h2>{{ name }}</h2>
+        <p>{{ email }}</p>
+      </div>
+    </div>
+
+    <button class="edit-btn" (click)="toggleChangePassword()">
+      Edit
+    </button>
+  </div>
+
+  <!-- DETAILS CARD -->
+  <div class="profile-card">
+
+    <div class="field">
+      <label>Full Name</label>
+      <input [value]="name" readonly />
+    </div>
+
+    <div class="field">
+      <label>Email</label>
+      <input [value]="email" readonly />
+    </div>
+
+    <div class="field">
+      <label>Password</label>
+      <input type="password" value="********" readonly />
+    </div>
+
+  </div>
+
+  <!-- CHANGE PASSWORD -->
+  <div *ngIf="showChangePassword" class="password-card">
+
+    <h3>Change Password</h3>
+
+    <input
+      type="password"
+      placeholder="Current Password"
+      [(ngModel)]="passwordData.oldPassword"
+    />
+
+    <input
+      type="password"
+      placeholder="New Password"
+      [(ngModel)]="passwordData.newPassword"
+    />
+
+    <input
+      type="password"
+      placeholder="Confirm New Password"
+      [(ngModel)]="passwordData.confirmPassword"
+    />
+
+    <button class="save-btn" (click)="changePassword()">
+      Update Password
+    </button>
+
+  </div>
+
+</div>

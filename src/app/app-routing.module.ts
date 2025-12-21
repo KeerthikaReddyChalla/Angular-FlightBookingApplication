@@ -7,6 +7,7 @@ import { BookComponent } from './book/book';
 import { DashboardComponent } from './dashboard/dashboard';
 import { HomeComponent } from './pages/home/home';
 import { AdminInventoryComponent } from './admin-inventory/admin-inventory';
+import { UserProfileComponent } from './user-profile/user-profile';
 export const routes: Routes = [
   { path: 'book', component: BookComponent },
   {
@@ -24,6 +25,10 @@ export const routes: Routes = [
 },
 
   { path: 'home', component: HomeComponent },
+  {
+  path: 'profile',
+  component: UserProfileComponent
+},
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
   path: 'book/:flightId',
