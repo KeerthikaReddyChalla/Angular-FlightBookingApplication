@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-user-profile',
@@ -23,7 +24,7 @@ export class UserProfileComponent implements OnInit {
     confirmPassword: ''
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     this.name = localStorage.getItem('name') || '';
@@ -36,7 +37,16 @@ export class UserProfileComponent implements OnInit {
 
   changePassword() {
     if (this.passwordData.newPassword !== this.passwordData.confirmPassword) {
-      alert('New password and confirm password do not match');
+      this.snackBar.open(
+      'New password and confirm password do not match',
+      'Close',
+      {
+        duration: 3500,
+        horizontalPosition: 'right',
+        verticalPosition: 'bottom',
+        panelClass: ['error-toast']
+      }
+    );
       return;
     }
 
@@ -58,7 +68,16 @@ export class UserProfileComponent implements OnInit {
       }
     ).subscribe({
       next: () => {
-        alert('Password updated successfully');
+         this.snackBar.open(
+      'Password changed successfully',
+      'Close',
+      {
+        duration: 3000,
+        horizontalPosition: 'right',
+        verticalPosition: 'bottom',
+        panelClass: ['success-toast']
+      }
+    );
         this.passwordData = {
           oldPassword: '',
           newPassword: '',
@@ -67,7 +86,16 @@ export class UserProfileComponent implements OnInit {
         this.showChangePassword = false;
       },
       error: () => {
-        alert('Password change failed');
+        this.snackBar.open(
+      'Password change failed',
+      'Close',
+      {
+        duration: 3500,
+        horizontalPosition: 'right',
+        verticalPosition: 'bottom',
+        panelClass: ['error-toast']
+      }
+    );
       }
     });
   }
