@@ -17,7 +17,9 @@
   padding: 32px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
-
+select{
+  background-position: right 14px center;
+}
 /* HEADINGS */
 .booking-card h2 {
   font-size: 26px;
@@ -58,12 +60,15 @@
 
 input,
 select {
-  padding: 12px;
-  border-radius: 8px;
+  width: 100%;
+  padding: 12px 40px 12px 14px;
+  border-radius: 10px;
   border: 1px solid #cbd5e1;
   font-size: 14px;
+  background-color: #ffffff;
+  height: 48px;              
+  box-sizing: border-box;
 }
-
 input:focus,
 select:focus {
   outline: none;
@@ -77,6 +82,8 @@ select:focus {
   margin-bottom: 6px;
   display: block;
 }
+
+
 
 /* PASSENGERS */
 .passenger-section {
@@ -129,6 +136,12 @@ select:focus {
 
 .confirm-btn:hover {
   background: #1d4ed8;
+}
+
+.readonly-input {
+  background-color: #f8fafc;
+  color: #334155;
+  cursor: not-allowed;
 }
 
 /* RESPONSIVE */

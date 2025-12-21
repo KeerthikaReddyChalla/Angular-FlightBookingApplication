@@ -50,8 +50,13 @@ export class LoginComponent {
      const payload = JSON.parse(atob(res.token.split('.')[1]));
      console.log(payload)
       localStorage.setItem('name', payload.name);
+      localStorage.setItem('role', payload.role);
 
-    this.router.navigate(['/flights']);
+     if (payload.role === 'ROLE_ADMIN') {
+        this.router.navigate(['/admin/inventory']);
+      } else {
+        this.router.navigate(['/flights']);
+      }
       // window.location.reload();
 
       

@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { Router, RouterModule, NavigationEnd } from '@angular/router';
 import { CommonModule } from '@angular/common';
-
+import { AuthService } from './services/auth';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -17,7 +17,7 @@ export class App {
   isLoggedIn = false;
   showLogoutDialog = false;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, public auth: AuthService) {
 
     // initial check
     this.checkLoginStatus();
@@ -47,10 +47,8 @@ export class App {
 
   // confirm logout
   confirmLogout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('email');
     this.showLogoutDialog = false;
-    this.isLoggedIn = false;
-    this.router.navigate(['/home']);
+    this.auth.logout(); 
   }
+
 }

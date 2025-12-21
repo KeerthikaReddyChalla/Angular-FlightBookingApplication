@@ -5,20 +5,27 @@
     </div>
 
     <nav class="nav-links">
-
+       <!--ADMIN ONLY -->
+      <a
+        *ngIf="auth.isAdmin()"
+        routerLink="/admin/inventory"
+        routerLinkActive="active"
+      >
+        Add Inventory
+      </a>
       <!-- NOT LOGGED IN -->
-      <ng-container *ngIf="!isLoggedIn">
+      <ng-container *ngIf="!isLoggedIn && !auth.isLoggedIn()">
         <a routerLink="/login" routerLinkActive="active">Login</a>
         <a routerLink="/register" routerLinkActive="active">Register</a>
       </ng-container>
 
       <!-- LOGGED IN -->
-      <ng-container *ngIf="isLoggedIn">
+      <ng-container *ngIf="auth.isLoggedIn() && !auth.isAdmin()">
         <a routerLink="/flights" routerLinkActive="active">Search Flights</a>
          <a routerLink="/dashboard">Dashboard</a>
-        <button class="logout-btn" (click)="openLogoutDialog()">Logout</button>
+        
       </ng-container>
-
+      <button class="logout-btn" (click)="openLogoutDialog()"  *ngIf="auth.isLoggedIn()">Logout</button>
     </nav>
   </div>
 </header>

@@ -1,0 +1,79 @@
+<div *ngIf="isAdmin; else noAccess" class="admin-wrapper">
+
+  <div class="admin-card">
+    <h2>Add Flight Inventory</h2>
+    <br>
+
+    <div class="form-grid">
+
+      <input
+        placeholder="Airline Name"
+        [(ngModel)]="inventory.airlineName"
+      />
+
+      <input
+        placeholder="Airline Logo (filename / URL)"
+        [(ngModel)]="inventory.airlineLogo"
+      />
+
+      <input
+        placeholder="From (e.g. HYD)"
+        [(ngModel)]="inventory.fromPlace"
+      />
+
+      <input
+        placeholder="To (e.g. CHE)"
+        [(ngModel)]="inventory.toPlace"
+      />
+
+      <div class="form-group">
+        <label>Departure</label>
+        <input
+          type="datetime-local"
+          [(ngModel)]="inventory.departure"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Arrival</label>
+        <input
+          type="datetime-local"
+          [(ngModel)]="inventory.arrival"
+        />
+      </div>
+
+      <input
+        type="number"
+        placeholder="Price (₹)"
+        [(ngModel)]="inventory.price"
+      />
+
+      <input
+        type="number"
+        placeholder="Available Seats"
+        [(ngModel)]="inventory.availableSeats"
+      />
+
+      <div class="checkbox-group">
+        <input
+          type="checkbox"
+          [(ngModel)]="inventory.oneWay"
+        />
+        <label>One Way Flight</label>
+      </div>
+
+    </div>
+
+    <button class="submit-btn" (click)="addInventory()">
+      Add Inventory
+    </button>
+  </div>
+
+</div>
+
+<ng-template #noAccess>
+  <div class="no-access">
+    <h2>403 – Unauthorized</h2>
+    <p>You are not allowed to access this page.</p>
+  </div>
+</ng-template>

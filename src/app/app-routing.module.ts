@@ -6,6 +6,7 @@ import { AuthGuard } from './guards/auth-guard';
 import { BookComponent } from './book/book';
 import { DashboardComponent } from './dashboard/dashboard';
 import { HomeComponent } from './pages/home/home';
+import { AdminInventoryComponent } from './admin-inventory/admin-inventory';
 export const routes: Routes = [
   { path: 'book', component: BookComponent },
   {
@@ -17,6 +18,9 @@ export const routes: Routes = [
   loadComponent: () =>
     import('./pages/flight-search/flight-search')
       .then(m => m.FlightSearchComponent)
+},{
+  path: 'admin/inventory',
+  component: AdminInventoryComponent
 },
 
   { path: 'home', component: HomeComponent },
