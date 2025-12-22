@@ -63,7 +63,7 @@ button {
   width: 100%;
   padding: 12px;
   margin-top: 10px;
-  background: #1976d2;
+  background: #3730a3;
   border: none;
   border-radius: 6px;
   color: white;
@@ -74,7 +74,7 @@ button {
 }
 
 button:hover {
-  background: #3e5fb3;
+  background: #2e25a6;
 }
 
 

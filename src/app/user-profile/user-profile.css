@@ -6,7 +6,7 @@
 
 /* HEADER */
 .profile-header {
-  background: linear-gradient(90deg, #3c96d7, #64a8e4);
+  background: linear-gradient(90deg, hsl(246, 46%, 88%), hsl(246, 46%, 88%));
   padding: 24px 32px;
   border-radius: 14px;
   display: flex;
@@ -103,14 +103,14 @@
   padding: 12px;
   border: none;
   border-radius: 8px;
-  background: #2563eb;
+  background: #3730a3;
   color: white;
   font-weight: 600;
   cursor: pointer;
 }
 
 .save-btn:hover {
-  background: #1d4ed8;
+  background: #2e25a6;
 }
 
 /* RESPONSIVE */

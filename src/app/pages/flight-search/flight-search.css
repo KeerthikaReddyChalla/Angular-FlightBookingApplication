@@ -13,14 +13,14 @@ input, button {
 }
 
 button {
-  background-color: #1976d2;
+  background-color: #3730a3;
   color: white;
   border: none;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: #125aa3;
+  background-color: #2e25a6;
 }
 
 .flight-card {

@@ -68,7 +68,7 @@ input:focus {
   padding: 14px;
   border: none;
   border-radius: 10px;
-  background: #2563eb;
+  background: #3730a3;
   color: white;
   font-size: 15px;
   font-weight: 600;
@@ -76,7 +76,7 @@ input:focus {
 }
 
 .submit-btn:hover {
-  background: #1d4ed8;
+  background: #2c23a4;
 }
 
 .no-access {
