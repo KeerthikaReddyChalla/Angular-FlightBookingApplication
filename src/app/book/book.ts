@@ -6,10 +6,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SeatMapComponent } from '../seat-map/seat-map';
 import { ViewChild} from '@angular/core';
 import { OnInit } from '@angular/core';
+import { MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-book',
   standalone: true,
-  imports: [CommonModule, FormsModule, SeatMapComponent],
+  imports: [CommonModule, FormsModule, SeatMapComponent, MatSnackBarModule],
   templateUrl: './book.html',
   styleUrls: ['./book.css']
 })
@@ -36,7 +38,8 @@ export class BookComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {}
 
 
@@ -48,7 +51,16 @@ export class BookComponent implements OnInit {
 
 
     if (!this.email || this.email === 'null') {
-      this.errorMessage = 'Session expired. Please login again.';
+      this.snackBar.open(
+      'Please login to book tickets',
+      'Close',
+      {
+        duration: 3500,
+        horizontalPosition: 'right',
+        verticalPosition: 'bottom',
+        panelClass: ['error-toast']
+      }
+    );;
       this.router.navigate(['/login']);
     }
   }
@@ -73,7 +85,16 @@ export class BookComponent implements OnInit {
   bookTicket() {
     const token = localStorage.getItem('token');
     if (!token) {
-      this.errorMessage = 'Unauthorized. Please login again.';
+      this.snackBar.open(
+      'Unauthorized user. Please login again.',
+      'Close',
+      {
+        duration: 3500,
+        horizontalPosition: 'right',
+        verticalPosition: 'bottom',
+        panelClass: ['error-toast']
+      }
+    );;
       
 
       return;
@@ -81,13 +102,31 @@ export class BookComponent implements OnInit {
     // this.seatNumbers = this.seatMap.selectedSeats;
 
     if (this.seatNumbers.length !== this.passengerCount) {
-      this.errorMessage = 'Please select seats equal to passenger count';
+      this.snackBar.open(
+      'Please select seats equal to number of passengers',
+      'Close',
+      {
+        duration: 3500,
+        horizontalPosition: 'right',
+        verticalPosition: 'bottom',
+        panelClass: ['error-toast']
+      }
+    );
       return;
     }
     // basic validation
     for (let p of this.passengers) {
       if (!p.name || !p.gender || !p.age) {
-        this.errorMessage = 'Please fill all passenger details';
+        this.snackBar.open(
+      'Please fill all passenger details',
+      'Close',
+      {
+        duration: 3500,
+        horizontalPosition: 'right',
+        verticalPosition: 'bottom',
+        panelClass: ['error-toast']
+      }
+    );
         return;
       }
     }
@@ -114,15 +153,43 @@ export class BookComponent implements OnInit {
         this.bookingSuccess = true;
         this.pnr = res.pnr;
         this.errorMessage = '';
+        this.snackBar.open(
+      'Booking successful! PNR: ' + this.pnr,
+      'Close',
+      {
+        duration: 3000,
+        horizontalPosition: 'right',
+        verticalPosition: 'bottom',
+        panelClass: ['success-toast']
+      }
+    );
       },
       error: (err) => {
         console.error(err);
         this.bookingSuccess = false;
 
         if (err.status === 400) {
-          this.errorMessage = err.error || 'Booking failed';
+          this.snackBar.open(
+      'Booking failed: ' + err.error.message,
+      'Close',
+      {
+        duration: 3500,
+        horizontalPosition: 'right',
+        verticalPosition: 'bottom',
+        panelClass: ['error-toast']
+      }
+    );
         } else {
-          this.errorMessage = 'Booking failed. Please try again.';
+          this.snackBar.open(
+      'Booking failed try again: ' + err.error.message,
+      'Close',
+      {
+        duration: 3500,
+        horizontalPosition: 'right',
+        verticalPosition: 'bottom',
+        panelClass: ['error-toast']
+      }
+    );
         }
       }
     });

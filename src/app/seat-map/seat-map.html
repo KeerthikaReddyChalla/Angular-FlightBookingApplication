@@ -1,5 +1,4 @@
-<div class="seat-map" *ngIf="seats.length > 0; else noSeats">
-
+<div class="seat-map" *ngIf="seats.length > 0">
   <div
     *ngFor="let seat of seats"
     class="seat"
@@ -9,7 +8,6 @@
   >
     {{ seat.seatNumber }}
   </div>
-
 </div>
 
 <ng-template #noSeats>
