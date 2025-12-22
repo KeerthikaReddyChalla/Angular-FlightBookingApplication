@@ -8,6 +8,7 @@ import { DashboardComponent } from './dashboard/dashboard';
 import { HomeComponent } from './pages/home/home';
 import { AdminInventoryComponent } from './admin-inventory/admin-inventory';
 import { UserProfileComponent } from './user-profile/user-profile';
+import { InventoriesComponent } from './inventories/inventories';
 export const routes: Routes = [
   { path: 'book', component: BookComponent },
   {
@@ -30,6 +31,10 @@ export const routes: Routes = [
   component: UserProfileComponent
 },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
+  {
+  path: 'inventories',
+  component: InventoriesComponent
+},
   {
   path: 'book/:flightId',
   loadComponent: () =>

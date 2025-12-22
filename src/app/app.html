@@ -13,6 +13,8 @@
       >
         Add Inventory
       </a>
+      <a *ngIf="auth.isAdmin()" routerLink="/inventories">Inventories</a>
+
       <!-- NOT LOGGED IN -->
       <ng-container *ngIf="!isLoggedIn && !auth.isLoggedIn()">
         <a routerLink="/login" routerLinkActive="active">Login</a>

@@ -1,0 +1,53 @@
+<div class="inventory-page">
+
+  <div class="header">
+    <div>
+      <h2>Flight Inventory</h2>
+      <p>Manage airline inventory and seat availability</p>
+    </div>
+
+    <button class="add-btn" (click)="goToAddInventory()">
+      Add Inventory
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    Loading inventories...
+  </div>
+
+  <div class="table-wrapper" *ngIf="!loading">
+
+    <table>
+      <thead>
+        <tr>
+          <th>Flight No</th>
+          <th>Airline</th>
+          <th>From</th>
+          <th>To</th>
+          <th>Date</th>
+          <th>Departure</th>
+          <th>Arrival</th>
+          <th>Seats</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let f of inventories">
+          <td>{{ f._id || '—' }}</td>
+          <td>{{ f.airlineName }}</td>
+          <td>{{ f.fromPlace }}</td>
+          <td>{{ f.toPlace }}</td>
+          <td>{{ f.departure | date:'dd-MM-yyyy' }}</td>
+          <td>{{ f.departure | date:'hh:mm a' }}</td>
+          <td>{{ f.arrival | date:'hh:mm a' }}</td>
+          <td>{{ f.availableSeats }}</td>
+          <td>₹{{ f.price }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+</div>
+
