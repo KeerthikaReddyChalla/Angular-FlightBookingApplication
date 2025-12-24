@@ -23,12 +23,15 @@ export class UserProfileComponent implements OnInit {
     newPassword: '',
     confirmPassword: ''
   };
+  forcePasswordChange = false;
 
   constructor(private http: HttpClient, private snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     this.name = localStorage.getItem('name') || '';
     this.email = localStorage.getItem('email') || '';
+    this.forcePasswordChange =
+    localStorage.getItem('forcePasswordChange') === 'true';
   }
 
   toggleChangePassword() {

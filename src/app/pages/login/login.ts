@@ -47,6 +47,7 @@ export class LoginComponent {
     );
       localStorage.setItem('token', res.token);
       localStorage.setItem('email', this.form.email);
+      localStorage.setItem('forcePasswordChange', res.forcePasswordChange);
      const payload = JSON.parse(atob(res.token.split('.')[1]));
      console.log(payload)
       localStorage.setItem('name', payload.name);
@@ -76,6 +77,9 @@ export class LoginComponent {
      
     }
   });
+}
+goToForgotPassword() {
+  this.router.navigate(['/forgot-password']);
 }
 
 }

@@ -9,10 +9,13 @@ import { HomeComponent } from './pages/home/home';
 import { AdminInventoryComponent } from './admin-inventory/admin-inventory';
 import { UserProfileComponent } from './user-profile/user-profile';
 import { InventoriesComponent } from './inventories/inventories';
+import { PasswordGuard } from './guards/password.guard';
+import { ForgotPassword } from './forgot-password/forgot-password';
+import { ResetPassword } from './reset-password/reset-password';
 export const routes: Routes = [
   { path: 'book', component: BookComponent },
   {
-    path: 'dashboard', component: DashboardComponent},
+    path: 'dashboard', component: DashboardComponent, canActivate: [PasswordGuard]},
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   {
@@ -30,6 +33,8 @@ export const routes: Routes = [
   path: 'profile',
   component: UserProfileComponent
 },
+{ path: 'forgot-password', component: ForgotPassword },
+ { path: 'reset-password', component: ResetPassword },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
   path: 'inventories',

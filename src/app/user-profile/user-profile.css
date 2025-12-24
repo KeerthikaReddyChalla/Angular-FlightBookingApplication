@@ -113,6 +113,15 @@
   background: #2e25a6;
 }
 
+.warning {
+  color: #b71c1c;
+  background: #fdecea;
+  padding: 10px;
+  border-radius: 6px;
+  margin: 12px 0;
+  font-weight: 600;
+}
+
 /* RESPONSIVE */
 @media (max-width: 768px) {
   .profile-card {
