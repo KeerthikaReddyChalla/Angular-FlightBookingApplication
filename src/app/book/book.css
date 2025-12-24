@@ -133,7 +133,6 @@ app-seat-map{
   justify-content:center;
 }
 
-/* Responsive */
 @media (max-width: 1024px) {
   .booking-page {
     grid-template-columns: 1fr;
