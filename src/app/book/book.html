@@ -26,10 +26,10 @@
 
       <div class="grid-2">
         <select [(ngModel)]="passengerCount" (change)="updatePassengers()">
-          <option *ngFor="let n of [1,2,3,4,5]" [value]="n">
-            {{ n }} Passenger{{ n > 1 ? 's' : '' }}
-          </option>
-        </select>
+  <option *ngFor="let n of [1,2,3,4,5]" [ngValue]="n">
+    {{ n }} Passenger{{ n > 1 ? 's' : '' }}
+  </option>
+</select>
 
         <select [(ngModel)]="meal">
           <option value="Veg">Vegetarian</option>
@@ -71,9 +71,12 @@
     <section class="card seat-card">
       <h3>Select Seats</h3>
       <p class="hint">Choose your preferred seats from the cabin layout</p>
-
+      <p class="hint" *ngIf="seatNumbers.length !== passengerCount">
+  Please select {{ passengerCount }} seat(s)
+</p>
       <app-seat-map
   [flightId]="flightId"
+  [maxSeats]="passengerCount"
   (seatsSelected)="seatNumbers = $event"
 ></app-seat-map>
     </section>
@@ -94,6 +97,7 @@
 
       <div class="row">
   <span>Selected Seats</span>
+  
   <strong>
     {{ seatNumbers.length ? seatNumbers.join(', ') : 'None' }}
   </strong>
@@ -108,6 +112,7 @@
     <button
   class="confirm-btn"
   (click)="bookTicket()"
+  [disabled]="!canBook"
   
 >
   ✈ Confirm Booking

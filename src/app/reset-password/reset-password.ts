@@ -27,6 +27,7 @@ export class ResetPassword implements OnInit {
 
   ngOnInit(): void {
     this.token = this.route.snapshot.queryParamMap.get('token') || '';
+    console.log('RESET TOKEN:', this.token);
   }
 
   resetPassword() {
@@ -50,8 +51,11 @@ export class ResetPassword implements OnInit {
       {
         token: this.token,
         newPassword: this.newPassword
+        
+        
       },
       { responseType: 'text' }
+      
     ).subscribe({
       next: () => {
         this.snackBar.open(
@@ -63,6 +67,7 @@ export class ResetPassword implements OnInit {
             verticalPosition: 'bottom',
             panelClass: ['success-toast']
           }
+          
         );
 
         setTimeout(() => {
@@ -87,6 +92,7 @@ export class ResetPassword implements OnInit {
             panelClass: ['error-toast']
           }
         );
+        console.log('RESET TOKEN:', this.token);
       }
     });
   }

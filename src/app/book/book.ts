@@ -73,6 +73,7 @@ export class BookComponent implements OnInit {
 
   updatePassengers() {
     this.passengers = [];
+    this.seatNumbers = [];
     for (let i = 0; i < this.passengerCount; i++) {
       this.passengers.push({
         name: '',
@@ -194,4 +195,11 @@ export class BookComponent implements OnInit {
       }
     });
   }
+  onSeatsSelected(seats: string[]) {
+  this.seatNumbers = seats;
+}
+get canBook(): boolean {
+  return this.seatNumbers.length === this.passengerCount;
+}
+
 }

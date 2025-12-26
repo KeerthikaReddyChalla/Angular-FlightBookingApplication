@@ -14,7 +14,9 @@ import { HttpClient, HttpClientModule} from '@angular/common/http';
 export class SeatMapComponent implements OnChanges{
 
   @Input() flightId!: string;
+  @Input() maxSeats!: number;
   @Output() seatsSelected = new EventEmitter<string[]>();
+  
   seats: any[] = [];
   selectedSeats: string[] = [];
 
@@ -45,6 +47,12 @@ ngOnChanges(changes: SimpleChanges): void {
 
   toggleSeat(seat: any) {
     if (seat.booked) return;
+     if (
+    !this.selectedSeats.includes(seat.seatNumber) &&
+    this.selectedSeats.length >= this.maxSeats
+  ) {
+    return; 
+  }
 
     if (this.selectedSeats.includes(seat.seatNumber)) {
       this.selectedSeats = this.selectedSeats.filter(

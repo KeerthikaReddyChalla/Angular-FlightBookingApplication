@@ -128,6 +128,12 @@ input:focus, select:focus {
   transform: translateY(-1px);
   box-shadow: 0 10px 25px rgba(91,95,199,0.3);
 }
+.confirm-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;   
+}
+
 app-seat-map{
   display:flex;
   justify-content:center;
